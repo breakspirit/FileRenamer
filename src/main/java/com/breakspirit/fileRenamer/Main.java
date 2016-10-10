@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class Main extends Application {
@@ -22,6 +23,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("File Renamer");
         primaryStage.setResizable(false);
+        primaryStage.initStyle(StageStyle.UTILITY); // Removes the border around the window
 
         // Set up the scene and show the stage
         Scene scene = new Scene(root);
