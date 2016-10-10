@@ -8,3 +8,15 @@
 .btn{
 -fx-color:orange;
 }
+
+.previewButton{
+-fx-color:#4b8900;
+}
+
+.pane {
+-fx-background-color: #333333;
+}
+
+.replaceThisPane {
+-fx-background-color: #222222;
+}

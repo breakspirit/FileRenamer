@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<GridPane fx:id="rootGrid" alignment="center" hgap="10.0" stylesheets="@styleSheet.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.breakspirit.fileRenamer.Controller">
+<GridPane fx:id="rootGrid" alignment="center" hgap="10.0" prefHeight="700.0" prefWidth="800.0" stylesheets="@styleSheet.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.breakspirit.fileRenamer.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -20,7 +21,7 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="10.0" styleClass="background">
+      <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="800.0" spacing="10.0" styleClass="background">
          <children>
             <Button fx:id="chooseFilesButton" mnemonicParsing="false" onAction="#openFileChooserDialog" prefWidth="400.0" text="Choose Files to Rename">
                <font>
@@ -33,27 +34,107 @@
                 <TableColumn fx:id="updatedFileNameColumn" prefWidth="394.0" text="Updated File Name" />
               </columns>
             </TableView>
+            <Pane prefHeight="30.0" prefWidth="200.0">
+               <children>
+                  <Label layoutY="-1.0" text="Available Tokens for Tokenized Rename" />
+                  <Label fx:id="alertLabel" layoutX="381.0" layoutY="-5.0" prefWidth="400.0" text="Alert Label" textAlignment="RIGHT">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+               </children>
+            </Pane>
+            <GridPane hgap="5.0" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="135.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="99.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="457.0" minWidth="10.0" prefWidth="158.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="205.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Ascending Numbers" />
+                  <Label fx:id="ascendingNumbersTokenLabel" text="\%AN" GridPane.columnIndex="1" />
+                  <Label text="Creation Date" GridPane.rowIndex="1" />
+                  <Label fx:id="creationDateTokenLabel" text="\%CD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <GridPane>
+                  <GridPane hgap="10.0" prefHeight="170.0" prefWidth="790.0" styleClass="pane" vgap="10.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="57.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="133.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="122.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="149.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="prefixLabel" text="Prefix" />
-                        <TextField fx:id="prefixField" GridPane.columnIndex="1" />
+                        <Label fx:id="prefixLabel" text="Prefix" GridPane.columnIndex="2" />
+                        <TextField fx:id="prefixField" prefWidth="147.0" GridPane.columnIndex="3" />
+                        <Label text="Suffix" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="suffixField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label text="Change Extension" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="changeExtensionField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Button fx:id="previewButton" mnemonicParsing="false" onAction="#previewButtonAction" prefWidth="170.0" styleClass="previewButton" text="Preview Changes" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                        <GridPane hgap="10.0" styleClass="replaceThisPane" vgap="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Replace This" GridPane.rowIndex="1" />
+                              <TextField fx:id="replaceThisField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="With This" GridPane.rowIndex="2" />
+                              <TextField fx:id="withThisField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <CheckBox fx:id="textReplaceCheckbox" mnemonicParsing="false" onAction="#textReplaceCheckboxAction" text="Enable Text Replace" GridPane.columnSpan="2" />
+                           </children>
+                           <padding>
+                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                           </padding>
+                        </GridPane>
+                        <Button fx:id="applyButton" mnemonicParsing="false" onAction="#applyRenameOperations" prefWidth="250.0" styleClass="btn" text="Apply" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <GridPane hgap="10.0" layoutX="10.0" layoutY="90.0" styleClass="replaceThisPane" vgap="10.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="1.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <CheckBox fx:id="tokenizedRenameCheckbox" mnemonicParsing="false" onAction="#tokenizedRenameCheckboxAction" text="Enable Tokenized Name Change" GridPane.columnSpan="2" />
+                              <Label text="Tokenized Rename" GridPane.rowIndex="1" />
+                              <TextField fx:id="tokenizedRenameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                           <padding>
+                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                           </padding>
+                        </GridPane>
                      </children>
                   </GridPane>
-                  <Button fx:id="applyButton" layoutX="526.0" layoutY="121.0" mnemonicParsing="false" onAction="#applyRenameOperations" prefWidth="250.0" styleClass="btn" text="Apply">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
                </children>
             </Pane>
          </children>
