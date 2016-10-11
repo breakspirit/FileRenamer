@@ -44,8 +44,6 @@ public class Controller {
     public CheckBox tokenizedRenameCheckbox;
     public TextField tokenizedRenameField;
     public Label alertLabel;
-    public Label ascendingNumbersTokenLabel;
-    public Label creationDateTokenLabel;
 
     private Logger logger = Logger.getLogger("Controller");
 
@@ -68,7 +66,7 @@ public class Controller {
         logger.log(Level.INFO, "Should be showing file select window");
 
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("C:\\Users\\break\\Desktop\\file rename test folder"));
+//        fileChooser.setInitialDirectory(new File("C:\\Users\\break\\Desktop\\file rename test folder"));
         fileChooser.setTitle("Choose files to be renamed");
 
         List<File> filesSelected = fileChooser.showOpenMultipleDialog(rootGrid.getScene().getWindow());
@@ -138,7 +136,7 @@ public class Controller {
         String transformedName = inputFile.getName();
 
         if(tokenizedRenameCheckbox.isSelected()) {
-            transformedName = FileNameTransformation.applyTokenizedRename(inputFile, tokenizedRenameField.getText(), ascendingNumbersCounter++, ascendingNumbersTokenLabel.getText(), creationDateTokenLabel.getText());
+            transformedName = FileNameTransformation.applyTokenizedRename(inputFile, tokenizedRenameField.getText(), ascendingNumbersCounter++);
         }
         if(textReplaceCheckbox.isSelected()) {
             transformedName = FileNameTransformation.applyTextReplace(transformedName, replaceThisField.getText(), withThisField.getText());

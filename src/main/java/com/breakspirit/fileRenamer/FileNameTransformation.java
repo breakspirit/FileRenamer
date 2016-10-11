@@ -22,6 +22,13 @@ class FileNameTransformation {
 
     private static Logger logger = Logger.getLogger("FileNameTransformation");
 
+    private static final String ORIGINAL_NAME_TOKEN = "%ON";
+    private static final String ASCENDING_NUMBERS_TOKEN = "%AN";
+    private static final String CREATION_DATE_YEAR_TOKEN = "%CY";
+    private static final String CREATION_DATE_MONTH_TOKEN = "%CM";
+    private static final String CREATION_DATE_DAY_TOKEN = "%CD";
+    private static final String CREATION_DATE_TIME_TOKEN = "%CT";
+
     static String applyPrefix(String inputFileName, String prefixValue) {
         if(!Strings.isNullOrEmpty(prefixValue)) {
 
@@ -52,16 +59,25 @@ class FileNameTransformation {
         }
     }
 
-    static String applyTokenizedRename(File inputFile, String tokenizedRenameString, int ascendingNumbersCounter, String ascendingNumbersToken, String creationDateToken) {
+    static String applyTokenizedRename(File inputFile, String tokenizedRenameString, int ascendingNumbersCounter) {
         if(Strings.isNullOrEmpty(tokenizedRenameString)) {
             return inputFile.getName();
         }
-        try {
-            BasicFileAttributes fileAttributes = Files.readAttributes(inputFile.toPath(), BasicFileAttributes.class);
-            Metadata metadata = ImageMetadataReader.readMetadata(inputFile);
 
-            ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-            Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+        try {
+            // Grab the oldest date, which could be the creation date, date last modified, or date taken(for photos)
+            BasicFileAttributes fileAttributes = Files.readAttributes(inputFile.toPath(), BasicFileAttributes.class);
+            Metadata metadata;
+//            if(tokenizedRenameString.contains(SOMETHING)) {
+                metadata = ImageMetadataReader.readMetadata(inputFile);
+                ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+                Date creationDate = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+
+            //todo the date stuff is not implemented yet
+
+//            }
+
+
 
         } catch (ImageProcessingException e) {
 //            if(tokenizedRenameString.contains(SOMETHING)) {
@@ -72,7 +88,8 @@ class FileNameTransformation {
         }
 
         // Apply all the tokens
-        tokenizedRenameString = tokenizedRenameString.replaceAll(ascendingNumbersToken, String.valueOf(ascendingNumbersCounter));
+        tokenizedRenameString = tokenizedRenameString.replaceAll(ORIGINAL_NAME_TOKEN, FilenameUtils.removeExtension(inputFile.getName()));
+        tokenizedRenameString = tokenizedRenameString.replaceAll(ASCENDING_NUMBERS_TOKEN, String.valueOf(ascendingNumbersCounter));
 //        tokenizedRenameString = tokenizedRenameString.replaceAll(creationDateToken, fileAttributes.creationTime()..ye);
 
         if(inputFile.getName().contains(".")) {
