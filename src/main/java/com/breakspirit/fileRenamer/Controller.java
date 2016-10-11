@@ -30,6 +30,7 @@ public class Controller {
     // UI elements
     public GridPane rootGrid;
     public Button chooseFilesButton;
+    public Button previewButton;
     public Button applyButton;
     public TableView table;
     public TableColumn originalFileNameColumn;
@@ -48,7 +49,7 @@ public class Controller {
 
     private Logger logger = Logger.getLogger("Controller");
 
-    private int ascendingNumbersCounter = 0;
+    private int ascendingNumbersCounter = 1;
 
     @FXML
     public void initialize() {
@@ -81,6 +82,7 @@ public class Controller {
                 filesToRename.add(fileToRename);
             }
 
+            previewButton.setDisable(false);
             applyButton.setDisable(false);
             table.setItems(filesToRename);
 
@@ -93,7 +95,7 @@ public class Controller {
     public void previewButtonAction(ActionEvent actionEvent) {
         logger.log(Level.INFO, "User is previewing their changes");
 
-        ascendingNumbersCounter = 0;
+        ascendingNumbersCounter = 1;
 
         for(FileToRename fileToRename : filesToRename) {
             String updatedPreviewFileName = applyAllSelectedTransformations(fileToRename.getFile());
@@ -113,7 +115,7 @@ public class Controller {
             return;
         }
 
-        ascendingNumbersCounter = 0;
+        ascendingNumbersCounter = 1;
 
         for(FileToRename fileToRename : filesToRename) {
             String newFileName = applyAllSelectedTransformations(fileToRename.getFile());
@@ -136,7 +138,7 @@ public class Controller {
         String transformedName = inputFile.getName();
 
         if(tokenizedRenameCheckbox.isSelected()) {
-            transformedName = FileNameTransformation.applyTokenizedRename(inputFile, tokenizedRenameField.getText(), ascendingNumbersCounter, ascendingNumbersTokenLabel.getText(), creationDateTokenLabel.getText());
+            transformedName = FileNameTransformation.applyTokenizedRename(inputFile, tokenizedRenameField.getText(), ascendingNumbersCounter++, ascendingNumbersTokenLabel.getText(), creationDateTokenLabel.getText());
         }
         if(textReplaceCheckbox.isSelected()) {
             transformedName = FileNameTransformation.applyTextReplace(transformedName, replaceThisField.getText(), withThisField.getText());

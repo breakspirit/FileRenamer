@@ -4,7 +4,7 @@
 
     <groupId>com.breakspirit</groupId>
     <artifactId>fileRenamer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>File Renamer</name>
@@ -40,7 +40,7 @@
 
     <build>
     <plugins>
-        <!--This plugin is used to make the distributable (exe)  -->
+        <!--This plugin is used to make the distributable (exe) which gets placed in target\jfx\native\fileRenamer-1.0  -->
         <plugin>
             <groupId>com.zenjava</groupId>
             <artifactId>javafx-maven-plugin</artifactId>

@@ -34,12 +34,16 @@
                 <TableColumn fx:id="updatedFileNameColumn" prefWidth="394.0" text="Updated File Name" />
               </columns>
             </TableView>
+            <Label fx:id="alertLabel" text="Alert Label" textAlignment="RIGHT">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
             <Pane prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label layoutY="-1.0" text="Available Tokens for Tokenized Rename" />
-                  <Label fx:id="alertLabel" layoutX="381.0" layoutY="-5.0" prefWidth="400.0" text="Alert Label" textAlignment="RIGHT">
+                  <Label layoutY="-8.0" text="Available Tokens for Tokenized Rename (not all files will contain all metadata.  Use the preview to check the results)">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font></Label>
                </children>
             </Pane>
@@ -57,10 +61,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Ascending Numbers" />
-                  <Label fx:id="ascendingNumbersTokenLabel" text="\%AN" GridPane.columnIndex="1" />
-                  <Label text="Creation Date" GridPane.rowIndex="1" />
-                  <Label fx:id="creationDateTokenLabel" text="\%CD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Ascending Numbers">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
+                  <Label fx:id="ascendingNumbersTokenLabel" text="\%AN" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
+                  <Label text="Creation Date" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
+                  <Label fx:id="creationDateTokenLabel" text="\%CD" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
                </children>
             </GridPane>
             <Pane prefHeight="200.0" prefWidth="200.0">
@@ -68,9 +84,9 @@
                   <GridPane hgap="10.0" prefHeight="170.0" prefWidth="790.0" styleClass="pane" vgap="10.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="57.0" />
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="133.0" />
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="122.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="149.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="235.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="97.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="101.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -85,13 +101,13 @@
                         <TextField fx:id="prefixField" prefWidth="147.0" GridPane.columnIndex="3" />
                         <Label text="Suffix" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextField fx:id="suffixField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label text="Change Extension" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <TextField fx:id="changeExtensionField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label text="Change Extension" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="changeExtensionField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <Button fx:id="previewButton" mnemonicParsing="false" onAction="#previewButtonAction" prefWidth="170.0" styleClass="previewButton" text="Preview Changes" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
                         <GridPane hgap="10.0" styleClass="replaceThisPane" vgap="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2">
                           <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="94.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="178.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -116,8 +132,8 @@
                         </Button>
                         <GridPane hgap="10.0" layoutX="10.0" layoutY="90.0" styleClass="replaceThisPane" vgap="10.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
                            <columnConstraints>
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="105.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="182.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />

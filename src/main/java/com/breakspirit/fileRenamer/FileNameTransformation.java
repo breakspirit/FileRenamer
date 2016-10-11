@@ -1,15 +1,26 @@
 package com.breakspirit.fileRenamer;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.google.common.base.Strings;
 
 /**
  * @author Kevin Bernard
  */
 class FileNameTransformation {
+
+    private static Logger logger = Logger.getLogger("FileNameTransformation");
 
     static String applyPrefix(String inputFileName, String prefixValue) {
         if(!Strings.isNullOrEmpty(prefixValue)) {
@@ -42,20 +53,23 @@ class FileNameTransformation {
     }
 
     static String applyTokenizedRename(File inputFile, String tokenizedRenameString, int ascendingNumbersCounter, String ascendingNumbersToken, String creationDateToken) {
-//        String tokenizedNameWithoutExtension = FilenameUtils.removeExtension(inputFile.getName());
+        if(Strings.isNullOrEmpty(tokenizedRenameString)) {
+            return inputFile.getName();
+        }
+        try {
+            BasicFileAttributes fileAttributes = Files.readAttributes(inputFile.toPath(), BasicFileAttributes.class);
+            Metadata metadata = ImageMetadataReader.readMetadata(inputFile);
 
-//        try {
-//            BasicFileAttributes fileAttributes = Files.readAttributes(inputFile.toPath(), BasicFileAttributes.class);
-//            Metadata metadata = ImageMetadataReader.readMetadata(inputFile);
-//
-//            ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-//            Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
-//
-//        } catch (ImageProcessingException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+            ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+            Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+
+        } catch (ImageProcessingException e) {
+//            if(tokenizedRenameString.contains(SOMETHING)) {
+//                logger.log(Level.INFO, "'" + inputFile.getName() + "' did not have image metadata...");
+//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Apply all the tokens
         tokenizedRenameString = tokenizedRenameString.replaceAll(ascendingNumbersToken, String.valueOf(ascendingNumbersCounter));
